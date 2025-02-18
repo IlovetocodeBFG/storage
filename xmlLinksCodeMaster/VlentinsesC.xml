@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+<ModulePrefs title="DiddyParty.com"/>
+<Content type="html"><![CDATA[
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #ffe6ea;
+        min-height: 100vh;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .wave-header {
+        background: #ff4d6d;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 900px;
+        z-index: -1;
+      }
+      
+      .curve {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 750px;
+        background: #ffe6ea;
+        border-radius: 90% 80% 0 0;
+        transform: scaleX(1.5);
+      }
+      
+      .header-title {
+        color: white;
+        font-size: 10vw;
+        font-weight: 900;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        padding: 20px 0;
+        margin-top: 50px;
+        position: relative;
+        text-shadow: 5px 5px 0px rgba(0,0,0,0.2),
+                     10px 10px 20px rgba(0,0,0,0.4),
+                     -2px -2px 15px rgba(255,255,255,0.1);
+        filter: drop-shadow(0 0 30px rgba(0,0,0,0.3));
+      }
+      
+      #games {
+        position: relative;
+        width: 85%;
+        margin: 80px auto 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2vw;
+        padding: 20px;
+      }
+      
+      #games a {
+        width: 14vw;
+        height: 14vw;
+        border-radius: 50%;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        display: block;
+        position: relative;
+        background: #ff4d6d;
+        border: 5px solid white;
+      }
+      
+      #games a:hover {
+        cursor: pointer;
+        transform: rotate(-5deg) scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 77, 109, 0.7);
+      }
+      
+      #games img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      
+      .content-wrapper {
+        flex-grow: 1;
+        padding-top: 200px;
+        z-index: 1;
+      }
+      
+      .footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 14px;
+        color: #ff4d6d;
+        font-weight: bold;
+        margin-top: auto;
+      }
+      
+      @media (max-width: 768px) {
+        .header-title {
+          font-size: 48px;
+        }
+        #games {
+          width: 90%;
+        }
+        #games a {
+          width: calc(33.33% - 20px);
+          height: auto;
+          aspect-ratio: 1;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="wave-header">
+        <div class="curve"></div>
+    </div>
+    <div class="content-wrapper">
+        <h1 class="header-title">Valentines  GAMES :</h1>
+        <div id="gameGrid"></div>
+    </div>
+    <div class="footer">
+      <i class="fa-regular fa-copyright">
+     </i> &copy;2025 Made By BigFishGaming <i class="fa-solid fa-code">
+      </i>. All Rights Are Reserved.
+      </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    fetch('https://cdn.jsdelivr.net/gh/IlovetocodeBFG/storage@refs/heads/main/gamesfiles.txt/Gamesslist.txt')
+        .then(response => response.text())
+        .then(data => {
+            let gameGrid = document.getElementById('games');
+            if (!gameGrid) {
+                gameGrid = document.createElement('div');
+                gameGrid.id = 'games';
+                document.body.appendChild(gameGrid);
+            }
+            
+            gameGrid.innerHTML = data;
+            
+            const games = document.querySelectorAll('#games a');
+            
+            games.forEach(game => {
+                game.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = game.getAttribute('data-url');
+                    
+                    const win = window.open('about:blank', '_blank');
+                    
+                    win.document.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Clever</title>
+                            <link rel="icon" href="https://i.ibb.co/qYwBW4KD/clever.jpg" type="image/x-icon" />
+                            <style>
+                                body, html {
+                                    margin: 0;
+                                    padding: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    overflow: hidden;
+                                    background: #ff4d6d;
+                                }
+                                iframe {
+                                    width: 100%;
+                                    height: 100%;
+                                    border: none;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <iframe src="${url}" allowfullscreen></iframe>
+                        </body>
+                        </html>
+                    `);
+                    win.document.close();
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error loading games:', error);
+        });
+});
+    </script>
+</body>
+</html>
+
+  ]]></Content>
+</Module>
